@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nestly — Know the True Cost Before You Fall in Love</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+        <path d="M9 21V12h6v9" fill="rgba(255,255,255,0.3)"/>
+      </svg>
+    </div>
+    <span class="logo-text">Nest<span>ly</span></span>
+  </a>
+  <a href="#calculator" class="nav-cta">Try the Calculator</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Australia's first home buying co-pilot</div>
+  <h1>That $650k house<br>actually costs <em>$712,000</em></h1>
+  <p class="hero-sub">Every property app shows you the asking price. Nestly shows you the real number — stamp duty, LMI, conveyancing, inspections, all of it.</p>
+  <p class="hero-proof">Free to use &nbsp;·&nbsp; All 8 Australian states &nbsp;·&nbsp; No sign-up required</p>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calc-wrapper" id="calculator">
+  <div class="calc-card">
+    <div class="calc-header">
+      <div class="calc-header-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16v4H4zM4 10h7v10H4zM13 10h7v4h-7zM13 16h7v4h-7z"/></svg>
+      </div>
+      <div class="calc-header-text">
+        <h2>True Cost Calculator</h2>
+        <p>See every dollar you will spend — before you fall in love with a property</p>
+      </div>
+    </div>
+
+    <div class="calc-body">
+      <div class="input-grid">
+        <div class="input-group">
+          <label for="price">Property price</label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input type="number" id="price" placeholder="650,000" min="0" max="50000000">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="deposit">Your deposit</label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input type="number" id="deposit" placeholder="130,000" min="0">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="state">State / Territory</label>
+          <div class="select-wrap">
+            <select id="state">
+              <option value="">Select your state</option>
+              <option value="WA">Western Australia</option>
+              <option value="NSW">New South Wales</option>
+              <option value="VIC">Victoria</option>
+              <option value="QLD">Queensland</option>
+              <option value="SA">South Australia</option>
+              <option value="TAS">Tasmania</option>
+              <option value="ACT">Australian Capital Territory</option>
+              <option value="NT">Northern Territory</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="property-type">Property type</label>
+          <div class="select-wrap">
+            <select id="property-type">
+              <option value="house">House</option>
+              <option value="apartment">Apartment / Unit</option>
+              <option value="townhouse">Townhouse</option>
+              <option value="land">Vacant land</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="toggle-row" onclick="toggleFHB()">
+        <div class="toggle-label">
+          <div>
+            <div class="toggle-label-text">First home buyer</div>
+            <div class="toggle-label-sub">Unlocks stamp duty exemptions &amp; grants</div>
+          </div>
+        </div>
+        <label class="toggle" onclick="event.stopPropagation()">
+          <input type="checkbox" id="fhb">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="strata-row" id="strata-row" onclick="toggleStrata()">
+        <div>
+          <div class="strata-label">Include strata / body corporate levies</div>
+          <div class="strata-sub">For apartments, units and townhouses</div>
+        </div>
+        <label class="toggle" onclick="event.stopPropagation()">
+          <input type="checkbox" id="strata">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <button class="calc-btn" onclick="calculate()">Calculate my true cost →</button>
+
+      <!-- RESULTS -->
+      <div class="results" id="results">
+
+        <div class="result-headline">
+          <div class="label">Total true cost of purchase</div>
+          <div class="total" id="total-display">$0</div>
+          <div class="vs" id="extra-display"></div>
+        </div>
+
+        <div class="grant-alert" id="grant-alert">
+          <div class="grant-alert-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#185FA5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Government grants &amp; concessions available
+          </div>
+          <div class="grant-alert-body" id="grant-text"></div>
+        </div>
+
+        <div class="lmi-alert" id="lmi-alert">
+          <div class="lmi-alert-title">⚠ Lender's Mortgage Insurance applies</div>
+          <div class="lmi-alert-body" id="lmi-text"></div>
+        </div>
+
+        <div class="breakdown-title">Cost breakdown</div>
+        <div class="breakdown-list" id="breakdown-list"></div>
+
+        <div class="breakdown-total">
+          <span class="name">Total true cost</span>
+          <span class="amount" id="breakdown-total-display">$0</span>
+        </div>
+
+        <div class="disclaimer">
+          These are estimates based on current government rates (April 2026). Actual costs vary by lender, conveyancer, and individual circumstances. Always verify with a licensed professional before making any property decision.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF STRIP -->
+<section class="proof-strip">
+  <div class="proof-strip-inner">
+    <div class="proof-card">
+      <div class="proof-number">$40k+</div>
+      <div class="proof-label">Average hidden costs buyers discover too late</div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-number">8</div>
+      <div class="proof-label">Australian states and territories covered</div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-number">2 min</div>
+      <div class="proof-label">To see the real cost of any property you are considering</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="section-eyebrow">How Nestly works</div>
+    <div class="section-heading">Your buying journey,<br>finally guided</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>See the true cost instantly</h3>
+          <p>Enter any property price and your state. Nestly calculates stamp duty, LMI, conveyancing, building inspections, council rates, and every government grant you qualify for — all in one number.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Score properties against your life</h3>
+          <p>Nestly scores every property you save against your commute, school zones, walkability, and lifestyle — so you stop comparing 20 listings in your head and start focusing on the ones that actually fit.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Ask anything, get answers in plain English</h3>
+          <p>Confused about a contract clause? Not sure what LMI actually means? Our AI advisor knows your situation and answers at 11pm on a Sunday — no booking, no fee, no jargon.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Always know your next step</h3>
+          <p>Nestly builds you a personalised 7-stage buying roadmap from your first search to settlement day. The home screen always tells you exactly what to do next — so you never feel lost again.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-card">
+    <div class="cta-eyebrow">Coming soon to iOS &amp; Android</div>
+    <div class="cta-heading">Stop browsing.<br>Start buying with confidence.</div>
+    <div class="cta-sub">Join the waitlist for the full Nestly app — AI advisor, lifestyle scoring, journey tracker, and more.</div>
+    <div class="cta-buttons">
+      <a href="#" class="btn-white">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        iOS Waitlist
+      </a>
+      <a href="#" class="btn-outline-white">Android Waitlist</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Nest<span>ly</span></div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Nestly Pty Ltd. General information only — not financial advice. Always consult a licensed professional.</div>
+</footer>
+
+<script type="module" src="/js/calculator.js"></script>
+</body>
+</html>
