@@ -127,6 +127,13 @@ function calculate() {
 
   document.getElementById('breakdown-total-display').textContent = fmt(totalCost);
 
+  posthog.capture('calculation_completed', {
+    property_price: price,
+    state: state,
+    first_home_buyer: isFHB,
+    total_true_cost: totalCost,
+  });
+
   const resultsEl = document.getElementById('results');
   resultsEl.classList.add('visible');
   setTimeout(() => {
@@ -139,6 +146,9 @@ window.toggleFHB = toggleFHB;
 window.toggleStrata = toggleStrata;
 window.calculate = calculate;
 
+// Analytics: page load
+posthog.capture('page_viewed', { page: 'calculator' });
+
 // Live comma formatting on price and deposit inputs
 ['price', 'deposit'].forEach(id => {
   document.getElementById(id).addEventListener('input', function () {
@@ -150,6 +160,7 @@ window.calculate = calculate;
 document.getElementById('state').addEventListener('change', function () {
   const waGroup = document.getElementById('wa-region-group');
   waGroup.style.display = this.value === 'WA' ? 'flex' : 'none';
+  if (this.value) posthog.capture('state_selected', { state: this.value });
 });
 
 // Show/hide strata row based on property type
