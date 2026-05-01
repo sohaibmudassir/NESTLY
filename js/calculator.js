@@ -4,6 +4,17 @@ function fmt(n) {
   return '$' + Math.round(n).toLocaleString('en-AU');
 }
 
+function parseInput(id) {
+  const raw = document.getElementById(id).value.replace(/,/g, '');
+  return parseFloat(raw);
+}
+
+function formatInputAsCommas(input) {
+  const raw = input.value.replace(/[^0-9]/g, '');
+  if (raw === '') { input.value = ''; return; }
+  input.value = parseInt(raw, 10).toLocaleString('en-AU');
+}
+
 function calcLMI(price, deposit) {
   const lvr = (price - deposit) / price;
   if (lvr <= 0.8) return { lmi: 0, applies: false };
@@ -29,8 +40,8 @@ function toggleStrata() {
 }
 
 function calculate() {
-  const price = parseFloat(document.getElementById('price').value);
-  const deposit = parseFloat(document.getElementById('deposit').value) || price * 0.2;
+  const price = parseInput('price');
+  const deposit = parseInput('deposit') || price * 0.2;
   const state = document.getElementById('state').value;
   const isFHB = document.getElementById('fhb').checked;
   const propertyType = document.getElementById('property-type').value;
@@ -126,6 +137,13 @@ function calculate() {
 window.toggleFHB = toggleFHB;
 window.toggleStrata = toggleStrata;
 window.calculate = calculate;
+
+// Live comma formatting on price and deposit inputs
+['price', 'deposit'].forEach(id => {
+  document.getElementById(id).addEventListener('input', function () {
+    formatInputAsCommas(this);
+  });
+});
 
 // Show/hide strata row based on property type
 document.getElementById('property-type').addEventListener('change', function () {
