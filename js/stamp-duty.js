@@ -1,4 +1,4 @@
-export function calcStampDuty(price, state, isFHB, propertyType) {
+export function calcStampDuty(price, state, isFHB, propertyType, waRegion = 'metro') {
   let duty = 0;
   let fhbSaving = 0;
   let grantText = '';
@@ -13,16 +13,20 @@ export function calcStampDuty(price, state, isFHB, propertyType) {
     else duty = 28453 + (price - 725000) * 0.0515;
 
     if (isFHB) {
+      const isRegional = waRegion === 'regional';
+      const concessionCap = isRegional ? 750000 : 700000;
+      const locationLabel = isRegional ? 'Regional WA' : 'Metro/Peel Perth';
+
       if (price <= 500000) {
         fhbSaving = duty; duty = 0;
-        grantText = 'Full stamp duty exemption — you save ' + fmt(fhbSaving) + '. Also eligible for the $10,000 First Home Owner Grant on new builds.';
-      } else if (price <= 700000) {
-        const concession = duty * ((700000 - price) / 200000);
+        grantText = 'Full stamp duty exemption (' + locationLabel + ') — you save ' + fmt(fhbSaving) + '. Also eligible for the $10,000 First Home Owner Grant on new builds under $750k.';
+      } else if (price <= concessionCap) {
+        const concession = duty * ((concessionCap - price) / (concessionCap - 500000));
         fhbSaving = concession;
         duty -= concession;
-        grantText = 'Partial stamp duty concession applied — you save ' + fmt(fhbSaving) + '. Eligible for $10,000 FHOG on new builds.';
+        grantText = 'Partial stamp duty concession applied (' + locationLabel + ', effective March 2025) — you save ' + fmt(fhbSaving) + '. Eligible for $10,000 FHOG on new builds under $750k.';
       } else {
-        grantText = 'Above concession threshold. Full duty applies. Eligible for $10,000 FHOG on new builds.';
+        grantText = 'Above the ' + locationLabel + ' concession threshold (' + fmt(concessionCap) + '). Full duty applies. Eligible for $10,000 FHOG on new builds under $750k.';
       }
     }
   }

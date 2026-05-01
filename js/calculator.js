@@ -46,6 +46,7 @@ function calculate() {
   const isFHB = document.getElementById('fhb').checked;
   const propertyType = document.getElementById('property-type').value;
   const includeStrata = document.getElementById('strata').checked;
+  const waRegion = document.getElementById('wa-region').value;
 
   if (!price || price < 10000) {
     alert('Please enter a valid property price.');
@@ -56,7 +57,7 @@ function calculate() {
     return;
   }
 
-  const { duty, grantText, fhbSaving } = calcStampDuty(price, state, isFHB, propertyType);
+  const { duty, grantText, fhbSaving } = calcStampDuty(price, state, isFHB, propertyType, waRegion);
   const { lmi, applies: lmiApplies, lvr } = calcLMI(price, deposit);
 
   const conveyancing = 2200;
@@ -143,6 +144,12 @@ window.calculate = calculate;
   document.getElementById(id).addEventListener('input', function () {
     formatInputAsCommas(this);
   });
+});
+
+// Show/hide WA region dropdown based on state selection
+document.getElementById('state').addEventListener('change', function () {
+  const waGroup = document.getElementById('wa-region-group');
+  waGroup.style.display = this.value === 'WA' ? 'flex' : 'none';
 });
 
 // Show/hide strata row based on property type
