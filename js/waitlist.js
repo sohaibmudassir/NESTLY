@@ -56,7 +56,7 @@ document.getElementById('waitlist-form').addEventListener('submit', async functi
         `You're on the list! We'll notify you at ${email} when Nestly launches.`;
       successEl.style.display = 'flex';
     } else if (data.error === 'Already signed up') {
-      errorEl.textContent = 'You're already on the waitlist!';
+      errorEl.textContent = `You're already on the waitlist!`;
       errorEl.style.display = 'block';
       btn.disabled = false;
       btn.textContent = 'Notify me when it launches';
