@@ -207,7 +207,7 @@ All rates verified as of May 2026. Rates are reviewed annually.
 
 | State | FHB Exemption | FHB Concession | Notes |
 |---|---|---|---|
-| WA | ≤ $450,000 (metro), ≤ $400,000 (regional) | Sliding scale to $600k / $750k | Metro/Peel vs Regional dropdown added March 2025 |
+| WA | ≤ $500,000 (all areas) | Sliding scale to $700,000 Metro/Peel, $750,000 Regional | Metro/Peel vs Regional dropdown added March 2025 |
 | NSW | ≤ $800,000 | Sliding scale to $1,000,000 | First Home Buyer Assistance Scheme |
 | VIC | ≤ $600,000 | Sliding scale to $750,000 | First Home Buyer duty reduction |
 | QLD | ≤ $550,000 | Sliding scale to $700,000 | QLD First Home Concession |
