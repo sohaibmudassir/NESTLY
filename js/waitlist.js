@@ -7,6 +7,9 @@ function openWaitlistModal(platform) {
   document.getElementById('waitlist-form').style.display = 'block';
   document.getElementById('waitlist-success').style.display = 'none';
   document.getElementById('waitlist-error').style.display = 'none';
+  const btn = document.getElementById('waitlist-submit');
+  btn.disabled = false;
+  btn.textContent = 'Notify me when it launches';
   document.getElementById('waitlist-modal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
   setTimeout(() => document.getElementById('waitlist-email').focus(), 100);
