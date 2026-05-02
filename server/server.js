@@ -52,8 +52,12 @@ app.post('/api/waitlist', async (req, res) => {
     if (error.code === '23505') {
       return res.status(409).json({ error: 'Already signed up' });
     }
-    console.error('Supabase error:', error.message);
-    return res.status(500).json({ error: 'Server error' });
+    console.error('Supabase error code:', error.code);
+    console.error('Supabase error message:', error.message);
+    console.error('Supabase error details:', error.details);
+    console.error('SUPABASE_URL set:', !!process.env.SUPABASE_URL);
+    console.error('SUPABASE_SERVICE_KEY set:', !!process.env.SUPABASE_SERVICE_KEY);
+    return res.status(500).json({ error: 'Server error', detail: error.message });
   }
 
   return res.json({ success: true });

@@ -66,9 +66,13 @@ document.getElementById('waitlist-form').addEventListener('submit', async functi
       btn.disabled = false;
       btn.textContent = 'Notify me when it launches';
     } else {
-      throw new Error('Unexpected response');
+      errorEl.textContent = data.detail || 'Something went wrong. Please try again.';
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Notify me when it launches';
     }
-  } catch {
+  } catch (err) {
+    console.error('Waitlist fetch error:', err);
     errorEl.textContent = 'Something went wrong. Please try again.';
     errorEl.style.display = 'block';
     btn.disabled = false;
