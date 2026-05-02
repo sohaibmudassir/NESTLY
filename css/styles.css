@@ -827,6 +827,181 @@ footer {
 .calc-wrapper { animation-delay: 0.1s; }
 .proof-strip { animation-delay: 0.2s; }
 
+/* WAITLIST MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 28, 26, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-card {
+  background: var(--cream);
+  border-radius: 20px;
+  padding: 40px 36px 36px;
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: var(--muted);
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.modal-close:hover { background: var(--border); color: var(--charcoal); }
+
+.modal-logo {
+  width: 40px;
+  height: 40px;
+  background: var(--teal);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.modal-logo svg { width: 22px; height: 22px; fill: white; }
+
+.modal-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.modal-sub {
+  font-size: 14px;
+  color: var(--mid);
+  font-weight: 300;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.modal-card .input-group { margin-bottom: 16px; }
+
+.modal-card input[type="email"] {
+  width: 100%;
+  height: 48px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--charcoal);
+  background: white;
+  padding: 0 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modal-card input[type="email"]:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.12);
+}
+
+.waitlist-btn {
+  width: 100%;
+  height: 50px;
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.waitlist-btn:hover:not(:disabled) { background: var(--teal-dark); }
+.waitlist-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.waitlist-error {
+  font-size: 13px;
+  color: var(--red);
+  margin-top: 10px;
+  text-align: center;
+}
+
+.waitlist-success {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 12px 0;
+}
+
+.waitlist-success-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--teal-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--teal);
+  margin: 0 auto 16px;
+}
+
+.waitlist-success-text {
+  font-size: 15px;
+  color: var(--charcoal);
+  line-height: 1.6;
+}
+
+/* Spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .result-row-animate {
   animation: fadeUp 0.3s ease both;
 }
